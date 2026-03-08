@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Banner Test</title>
+</head>
+<body>
+  <h1>Banner Test</h1>
+
+  <h2>Upload Image</h2>
+  <input type="file" id="fileInput" accept="image/*">
+  <button onclick="upload()">Upload</button>
+  <p id="uploadStatus"></p>
+
+  <h2>Images</h2>
+  <button onclick="loadImages()">Refresh</button>
+  <div id="images"></div>
+
+  <script src="config.js"></script>
+  <script>
+    const API = window.CONFIG.API;
+
+    async function upload() {
+      const file = document.getElementById('fileInput').files[0];
+      const status = document.getElementById('uploadStatus');
+      if (!file) { status.textContent = 'Pick a file first.'; return; }
+
+      status.textContent = 'Getting upload URL...';
+
+      const res = await fetch(`${API}/api/upload-url?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}`, { method: 'POST' });
+      const { uploadUrl, error } = await res.json();
+      if (error) { status.textContent = `Error: ${error}`; return; }
+
+      status.textContent = 'Uploading to S3...';
+      const s3Res = await fetch(uploadUrl, {
+        method: 'PUT',
+        body: file,
+        headers: { 'Content-Type': file.type }
+      });
+
+      if (!s3Res.ok) { status.textContent = `S3 upload failed: ${s3Res.status}`; return; }
+
+      status.textContent = 'Uploaded! Processing may take a few seconds...';
+    }
+
+    async function loadImages() {
+      const container = document.getElementById('images');
+      container.textContent = 'Loading...';
+
+      const res = await fetch(`${API}/api/images`);
+      const { images, count } = await res.json();
+
+      container.innerHTML = `<p>${count} image(s)</p>`;
+      for (const img of images) {
+        const el = document.createElement('img');
+        el.src = img.url;
+        el.width = 200;
+        el.title = img.filename;
+        container.appendChild(el);
+      }
+    }
+  </script>
+</body>
+</html>
