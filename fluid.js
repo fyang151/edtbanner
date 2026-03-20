@@ -3,7 +3,7 @@ function startFluidSim() {
   const ctx = canvas.getContext("2d");
 
   const SCALE = 4;
-  const COOLING = 1;
+  const COOLING = 2;
   const OFFSCREEN_ROWS = 0;
 
   let cols, rows, buf, imageData, pixels;
