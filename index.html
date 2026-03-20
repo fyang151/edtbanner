@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hackathon Banner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      overflow: hidden;
+    }
+
+    #fluidCanvas {
+      position: fixed;
+      top: 15vh;
+      left: 0;
+      width: 100%;
+      height: 85vh;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, transparent 0px, black 300px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 300px);
+    }
+
+    .sponsor-bar,
+    .current-time,
+    .timeline {
+      position: relative;
+      z-index: 1;
+    }
+
+    #logo {
+      height: 22vh;
+      flex-shrink: 0;
+      margin-right: 20px;
+    }
+
+    .sponsor-bar-scroll {
+      flex: 1;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0px, black 120px);
+      -webkit-mask-image: linear-gradient(to right, transparent 0px, black 120px);
+    }
+
+    .sponsor-bar {
+      height: 15vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: white;
+    }
+
+    .sponsor-bar-track {
+      display: flex;
+      gap: 60px;
+      width: max-content;
+      transform: translateY(-1vh);
+    }
+
+    .sponsor-bar-track img {
+      height: 9vh;
+      opacity: 0.8;
+      filter: grayscale(30%);
+    }
+
+    .current-time {
+      height: 55vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .current-time-display {
+      font-size: 25vw;
+      font-weight: bold;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+    }
+
+    .timeline {
+      height: 30vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .timeline iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="fluidCanvas"></canvas>
+
+  <div class="sponsor-bar">
+    <img id="logo" src="assets/logo.svg" alt="Logo">
+    <div class="sponsor-bar-scroll">
+      <div class="sponsor-bar-track" id="sponsorBarTrack">
+        <img src="assets/impjak.png" alt="Impjak">
+        <img src="assets/sponsors/amazon.png" alt="Amazon">
+        <img src="assets/sponsors/bakd.png" alt="Bakd">
+        <img src="assets/sponsors/beaty-biodiversity-museum.png" alt="Beaty Biodiversity Museum">
+        <img src="assets/sponsors/golds-gym.png" alt="Gold's Gym">
+        <img src="assets/sponsors/handshake.png" alt="Handshake">
+        <img src="assets/sponsors/hatch.png" alt="Hatch">
+        <img src="assets/sponsors/ieee-vancouver-section.png" alt="IEEE Vancouver Section">
+        <img src="assets/sponsors/lucid-vision-labs.png" alt="Lucid Vision Labs">
+        <img src="assets/sponsors/moa.png" alt="MOA">
+        <img src="assets/sponsors/pajos.png" alt="Pajos">
+        <img src="assets/sponsors/red-bull.png" alt="Red Bull">
+        <img src="assets/sponsors/steves-poke-bar.png" alt="Steve's Poke Bar">
+        <img src="assets/sponsors/ubc-botanical-garden.png" alt="UBC Botanical Garden">
+        <img src="assets/sponsors/ubc-engineering-undergraduate-society.png"
+          alt="UBC Engineering Undergraduate Society">
+        <img src="assets/sponsors/vancouver-art-gallery.png" alt="Vancouver Art Gallery">
+      </div>
+    </div>
+  </div>
+
+  <div class="current-time">
+    <div class="current-time-display" id="currentTimeDisplay">00:00:00</div>
+  </div>
+
+  <div class="timeline">
+    <iframe
+      src="https://fyang151.github.io/timeliner/view.html#eyJzdGFydCI6MTE1MjAwLCJlbmQiOjE2NTYwMCwiaW50ZXJ2YWwiOjMwMCwiZm9udCI6IlJvYm90byBNb25vIiwic2hhcGUiOiJwYXJhbGxlbG9ncmFtIiwiaW5kaWNhdG9yQ29sb3IiOiIjMDAwMDAwIiwidGlja0NvbG9yIjoiI0ZGRkZGRiIsInNjcm9sbE1vZGUiOnRydWUsInNjcm9sbFdpbmRvdyI6MzYwMCwicm93cyI6W3sic2VnbWVudHMiOlt7ImZyb20iOjAsInRvIjoxMSwibGFiZWwiOiJDSEVDSyBJTiIsImNvbG9yIjoiI0ZGRkZGRiJ9LHsiZnJvbSI6MTIsInRvIjoxMTMsImxhYmVsIjoiSEFDS0lORyIsImNvbG9yIjoiI0ZGRkZGRiJ9LHsiZnJvbSI6MTE3LCJ0byI6MTM0LCJsYWJlbCI6IkRFTU9TIiwiY29sb3IiOiIjRkZGRkZGIn0seyJmcm9tIjoxMzUsInRvIjoxNDMsImxhYmVsIjoiSlVER0lORyBERUxJQkVSQVRJT04iLCJjb2xvciI6IiNGRkZGRkYifSx7ImZyb20iOjE0NCwidG8iOjE0OSwibGFiZWwiOiJDTE9TSU5HIENFUkVNT05ZIiwiY29sb3IiOiIjRkZGRkZGIn0seyJmcm9tIjoxNTAsInRvIjoxNjcsImxhYmVsIjoiQUZURVJQQVJUWSAvIE5FVFdPUktJTkciLCJjb2xvciI6IiNGRkZGRkYifV19LHsic2VnbWVudHMiOlt7ImZyb20iOjYsInRvIjoxOCwibGFiZWwiOiJSRURCVUxMIENPTUlORyIsImNvbG9yIjoiI0ZGRkZGRiJ9LHsiZnJvbSI6NDIsInRvIjo0NSwibGFiZWwiOiJTUEVFRENBRCBDSEFMTEVOR0UiLCJjb2xvciI6IiNGRkZGRkYifSx7ImZyb20iOjQ4LCJ0byI6NTksImxhYmVsIjoiTFVOQ0giLCJjb2xvciI6IiNGRkZGRkYifSx7ImZyb20iOjcyLCJ0byI6NzQsImxhYmVsIjoiSEVMTE9XT1JMRCBDSEFMTEVOR0UiLCJjb2xvciI6IiNGRkZGRkYifSx7ImZyb20iOjg0LCJ0byI6ODcsImxhYmVsIjoiRUUgQlJBSU4gVEVBU0VSIENIQUxMRU5HRSIsImNvbG9yIjoiI0ZGRkZGRiJ9XX0seyJzZWdtZW50cyI6W3siZnJvbSI6MTIsInRvIjoxOCwibGFiZWwiOiJPUEVOSU5HIENFUkVNT05ZIiwiY29sb3IiOiIjRkZGRkZGIn1dfV19"
+      width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+
+  <script src="fluid.js"></script>
+  <script>
+    const pad2 = n => String(n).padStart(2, '0');
+
+    function getTime() {
+      const t = new Date();
+      return `${pad2(t.getHours())}:${pad2(t.getMinutes())}:${pad2(t.getSeconds())}`;
+    }
+
+    function startClock() {
+      const display = document.getElementById('currentTimeDisplay');
+      const tick = () => {display.textContent = getTime(); requestAnimationFrame(tick);};
+      tick();
+    }
+
+    function fillSponsorBar() {
+      const track = document.getElementById('sponsorBarTrack');
+      const original = track.innerHTML;
+      while (track.scrollWidth < window.innerWidth) {
+        track.innerHTML += original;
+      }
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const repeatWidth = track.scrollWidth + gap;
+      track.innerHTML += track.innerHTML;
+
+      let x = 0;
+      const speed = 1;
+      const tick = () => {
+        x -= speed;
+        if (x <= -repeatWidth) x += repeatWidth;
+        track.style.transform = `translateX(${x}px)`;
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }
+
+    startClock();
+    startFluidSim();
+    window.addEventListener('load', fillSponsorBar);
+  </script>
+
+</body>
+
+</html>
